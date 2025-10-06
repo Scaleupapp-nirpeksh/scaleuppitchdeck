@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: 30 64 175;     /* #1E40AF */
+    --secondary: 8 145 178;    /* #0891B2 */
+    --accent: 249 115 22;      /* #F97316 */
+    --dark: 15 23 42;          /* #0F172A */
+    --text-primary: 30 41 59;  /* #1E293B */
+    --text-secondary: 100 116 139; /* #64748B */
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    overflow-x: hidden;
+    background: white;
+    color: rgb(var(--text-primary));
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply px-4 sm:px-6 md:px-12 lg:px-20 xl:px-32;
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, #1E40AF 0%, #0891B2 100%);
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .metric-card {
+    @apply p-6 rounded-2xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-accent text-white rounded-lg font-semibold hover:bg-orange-600 transition-colors duration-200 shadow-md hover:shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  /* Progress indicator */
+  .progress-dot {
+    @apply w-3 h-3 rounded-full bg-gray-300 cursor-pointer transition-all duration-300;
+  }
+
+  .progress-dot.active {
+    @apply bg-accent scale-125;
+  }
+
+  /* Animated background */
+  .animated-gradient {
+    background: linear-gradient(-45deg, #1E40AF, #0891B2, #06B6D4, #1E40AF);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Print styles for PDF generation */
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+    
+    .section {
+      page-break-after: always;
+      min-height: 100vh;
+    }
+    
+    body {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+  }
+}
+
+/* Loading animation */
+.loader {
+  border: 3px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 3px solid #F97316;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Smooth scroll indicator */
+.scroll-indicator {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
