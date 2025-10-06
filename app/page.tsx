@@ -7,6 +7,8 @@ import TeamSection from '@/components/sections/TeamSection';
 import ProblemSection from '@/components/sections/ProblemSection';
 import InsightSection from '@/components/sections/InsightSection';
 import SolutionSection from '@/components/sections/SolutionSection';
+// ## IMPORTED THE NEW SECTION ##
+import UserJourneySection from '@/components/sections/UserJourneySection';
 import TractionSection from '@/components/sections/TractionSection';
 import RoadmapSection from '@/components/sections/RoadmapSection';
 import AskSection from '@/components/sections/AskSection';
@@ -67,6 +69,8 @@ export default function Home() {
         <ProblemSection />
         <InsightSection />
         <SolutionSection />
+        {/* ## ADDED THE USER JOURNEY SECTION TO THE MAIN PAGE FLOW ## */}
+        <UserJourneySection />
         <TractionSection />
         <RoadmapSection />
         <TeamSection />
@@ -74,7 +78,6 @@ export default function Home() {
         <ContactSection />
         
         {/* Additional sections will be added here */}
-        {/* <JourneySection /> */}
         {/* <CompetitiveSection /> */}
         {/* <BusinessModelSection /> */}
         {/* <EconomicsSection /> */}
@@ -84,3 +87,5 @@ export default function Home() {
     </>
   );
 }
+
+

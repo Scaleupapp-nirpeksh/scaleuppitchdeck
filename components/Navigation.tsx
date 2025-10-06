@@ -9,6 +9,20 @@ interface NavigationProps {
   totalSections: number;
 }
 
+// Define the navigation items in a single place for consistency.
+const navItems = [
+    { id: 'hero', label: 'Home' },
+    { id: 'problem', label: 'Problem' },
+    { id: 'insight', label: 'Insight' },
+    { id: 'solution', label: 'Solution' },
+    { id: 'user-journey', label: 'Journey' },
+    { id: 'traction', label: 'Traction' },
+    { id: 'roadmap', label: 'Roadmap' },
+    { id: 'team', label: 'Team' },
+    { id: 'ask', label: 'The Ask' },
+    { id: 'contact', label: 'Contact' },
+];
+
 export default function Navigation({ currentSection, totalSections }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -30,21 +44,11 @@ export default function Navigation({ currentSection, totalSections }: Navigation
   };
 
   const handleDownloadPDF = () => {
-    // This will be implemented with the PDF generation logic
     window.print();
   };
-
-  const navItems = [
-    { id: 'hero', label: 'Home' },
-    { id: 'problem', label: 'Problem' },
-    { id: 'insight', label: 'Insight' },
-    { id: 'solution', label: 'Solution' },
-    { id: 'traction', label: 'Traction' },
-    { id: 'roadmap', label: 'Roadmap' },
-    { id: 'team', label: 'Team' },
-    { id: 'ask', label: 'The Ask' },
-    { id: 'contact', label: 'Contact' },
-  ];
+  
+  // Determine the active section ID based on the current index
+  const activeSectionId = navItems[currentSection - 1]?.id;
 
   return (
     <>
@@ -53,61 +57,62 @@ export default function Navigation({ currentSection, totalSections }: Navigation
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 no-print ${
-          isScrolled ? 'glass-effect shadow-lg' : 'bg-transparent'
+          isScrolled ? 'bg-white/80 backdrop-blur-md shadow-lg' : 'bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Brand Name */}
+            {/* Brand Logo */}
             <div 
               className="flex items-center cursor-pointer group"
               onClick={() => scrollToSection('hero')}
             >
               <span className={`text-2xl font-bold tracking-tight transition-colors duration-200 ${
                 isScrolled 
-                  ? 'text-gray-800 group-hover:text-blue-700' 
-                  : 'text-white group-hover:text-yellow-400'
+                  ? 'text-slate-800' 
+                  : 'text-white'
               }`}>
                 scale<span className="text-yellow-400">U</span>p
               </span>
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`transition-colors duration-200 font-medium ${
-                    isScrolled 
-                      ? 'text-gray-700 hover:text-blue-700' 
-                      : 'text-gray-200 hover:text-white'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
+            <div className="hidden md:flex items-center space-x-1 lg:space-x-4">
+              {navItems.map((item) => {
+                const isActive = activeSectionId === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                      isScrolled 
+                        ? (isActive ? 'bg-slate-200 text-slate-900' : 'text-slate-700 hover:text-slate-900')
+                        : (isActive ? 'bg-white/20 text-white' : 'text-slate-200 hover:text-white')
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                )
+              })}
               <button
                 onClick={handleDownloadPDF}
-                className="btn-primary flex items-center space-x-2"
+                className="ml-4 flex items-center space-x-2 bg-yellow-400 text-slate-900 font-semibold px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors shadow-sm"
               >
                 <Download className="w-4 h-4" />
                 <span>Download PDF</span>
               </button>
             </div>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Menu Toggle with Accessibility Attributes */}
             <button
               className={`md:hidden transition-colors duration-200 ${
-                isScrolled ? 'text-gray-700' : 'text-white'
+                isScrolled ? 'text-slate-700' : 'text-white'
               }`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-controls="mobile-menu"
+              aria-expanded={isMobileMenuOpen}
             >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -115,6 +120,7 @@ export default function Navigation({ currentSection, totalSections }: Navigation
 
       {/* Mobile Menu */}
       <motion.div
+        id="mobile-menu"
         initial={false}
         animate={{ x: isMobileMenuOpen ? 0 : '100%' }}
         transition={{ type: 'tween', duration: 0.3 }}
@@ -131,7 +137,7 @@ export default function Navigation({ currentSection, totalSections }: Navigation
               }}
               transition={{ delay: index * 0.05 }}
               onClick={() => scrollToSection(item.id)}
-              className="block w-full text-left py-3 text-lg font-medium text-text-primary hover:text-primary transition-colors"
+              className="block w-full text-left py-3 text-lg font-medium text-slate-700 hover:text-blue-600 transition-colors"
             >
               {item.label}
             </motion.button>
@@ -142,11 +148,11 @@ export default function Navigation({ currentSection, totalSections }: Navigation
               opacity: isMobileMenuOpen ? 1 : 0, 
               y: isMobileMenuOpen ? 0 : 20 
             }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: navItems.length * 0.05 }}
             onClick={handleDownloadPDF}
-            className="btn-primary w-full mt-6 flex items-center justify-center space-x-2"
+            className="w-full mt-6 flex items-center justify-center space-x-2 bg-yellow-400 text-slate-900 font-semibold px-4 py-3 rounded-md hover:bg-yellow-500 transition-colors shadow-sm"
           >
-            <Download className="w-4 h-4" />
+            <Download className="w-5 h-5" />
             <span>Download PDF</span>
           </motion.button>
         </div>
@@ -154,35 +160,32 @@ export default function Navigation({ currentSection, totalSections }: Navigation
 
       {/* Progress Indicator */}
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-30 no-print">
-        <div className="bg-white rounded-full px-4 py-2 shadow-lg border border-gray-200">
-          <span className="text-sm font-medium text-text-secondary">
+        <div className="bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-slate-200/80">
+          <span className="text-sm font-medium text-slate-600">
             {currentSection} / {totalSections}
           </span>
         </div>
       </div>
 
-      {/* Side Navigation Dots */}
+      {/* Side Navigation Dots - Now dynamically generated */}
       <div className="fixed right-8 top-1/2 transform -translate-y-1/2 space-y-3 hidden lg:block no-print">
-        {Array.from({ length: totalSections }, (_, i) => (
+        {navItems.map((item, index) => (
           <button
-            key={i}
-            onClick={() => {
-              const sections = ['hero', 'problem', 'insight', 'solution', 'journey', 'competitive', 'traction', 'roadmap', 'model', 'economics', 'team', 'ask', 'vision', 'impact', 'contact'];
-              scrollToSection(sections[i] || 'hero');
-            }}
-            className={`progress-dot ${currentSection === i + 1 ? 'active' : ''}`}
-            aria-label={`Go to section ${i + 1}`}
+            key={item.id}
+            onClick={() => scrollToSection(item.id)}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${currentSection === index + 1 ? 'bg-yellow-400 scale-150' : 'bg-slate-400 hover:bg-slate-600'}`}
+            aria-label={`Go to ${item.label} section`}
           />
         ))}
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Down Indicator */}
       {currentSection === 1 && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2, duration: 0.5 }}
-          className="scroll-indicator text-white no-print"
+          transition={{ delay: 1.5, duration: 0.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+          className="fixed bottom-8 left-1/2 -translate-x-1/2 text-white no-print hidden md:block"
         >
           <ChevronDown className="w-8 h-8" />
         </motion.div>
