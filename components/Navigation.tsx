@@ -58,19 +58,18 @@ export default function Navigation({ currentSection, totalSections }: Navigation
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Logo - PLACEHOLDER FOR LOGO IMAGE */}
+            {/* Brand Name */}
             <div 
-              className="flex items-center cursor-pointer"
+              className="flex items-center cursor-pointer group"
               onClick={() => scrollToSection('hero')}
             >
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                S
-              </div>
-              <span className="ml-2 text-xl font-bold gradient-text">ScaleUp</span>
-              {/* 
-                LOGO PLACEHOLDER: Replace the div above with:
-                <img src="/logo.png" alt="ScaleUp" className="h-10 w-auto" />
-              */}
+              <span className={`text-2xl font-bold tracking-tight transition-colors duration-200 ${
+                isScrolled 
+                  ? 'text-gray-800 group-hover:text-blue-700' 
+                  : 'text-white group-hover:text-yellow-400'
+              }`}>
+                scale<span className="text-yellow-400">U</span>p
+              </span>
             </div>
 
             {/* Desktop Navigation */}
@@ -79,7 +78,11 @@ export default function Navigation({ currentSection, totalSections }: Navigation
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-text-secondary hover:text-primary transition-colors duration-200 font-medium"
+                  className={`transition-colors duration-200 font-medium ${
+                    isScrolled 
+                      ? 'text-gray-700 hover:text-blue-700' 
+                      : 'text-gray-200 hover:text-white'
+                  }`}
                 >
                   {item.label}
                 </button>
@@ -95,7 +98,9 @@ export default function Navigation({ currentSection, totalSections }: Navigation
 
             {/* Mobile Menu Toggle */}
             <button
-              className="md:hidden"
+              className={`md:hidden transition-colors duration-200 ${
+                isScrolled ? 'text-gray-700' : 'text-white'
+              }`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? (
