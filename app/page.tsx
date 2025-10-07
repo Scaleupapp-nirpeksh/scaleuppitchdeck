@@ -7,7 +7,6 @@ import TeamSection from '@/components/sections/TeamSection';
 import ProblemSection from '@/components/sections/ProblemSection';
 import InsightSection from '@/components/sections/InsightSection';
 import SolutionSection from '@/components/sections/SolutionSection';
-// ## IMPORTED THE NEW SECTION ##
 import UserJourneySection from '@/components/sections/UserJourneySection';
 import TractionSection from '@/components/sections/TractionSection';
 import RoadmapSection from '@/components/sections/RoadmapSection';
@@ -21,7 +20,7 @@ import ProfitabilitySection from '@/components/sections/ProfitabilitySection';
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(1);
-  const totalSections = 12;
+  const totalSections = 13;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,7 +73,6 @@ export default function Home() {
         <ProblemSection />
         <InsightSection />
         <SolutionSection />
-        {/* ## ADDED THE USER JOURNEY SECTION TO THE MAIN PAGE FLOW ## */}
         <UserJourneySection />
         <TractionSection />
         <RoadmapSection />
