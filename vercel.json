@@ -3,10 +3,5 @@
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "outputDirectory": ".next",
-  "regions": ["bom1"],
-  "functions": {
-    "app/**": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  "regions": ["bom1"]
 }
