@@ -2,27 +2,125 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  User, BookOpen, Award, Brain, Briefcase, 
-  ChevronRight, Star, Clock, TrendingUp, 
-  Users, Target, Sparkles, CheckCircle,
-  ArrowRight, Smartphone, Heart, MapPin,
-  School, DollarSign, Trophy, Zap
+import type { LucideIcon } from 'lucide-react';
+import {
+  MapPin,
+  GraduationCap,
+  Coins,
+  Brain,
+  Medal,
+  Compass,
+  Sparkles,
+  BadgeCheck,
+  Users,
+  HeartHandshake,
+  CheckCircle,
+  Heart,
+  School,
 } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
+
+const COLOR_THEMES = {
+  gray: {
+    headerGradient: 'from-slate-600 to-slate-700',
+    statGradient: 'from-slate-50 to-white',
+    statBorder: 'border-slate-200',
+    iconActive: 'bg-slate-600 text-white shadow-lg border border-slate-600',
+    iconComplete: 'bg-slate-100 text-slate-700 border border-slate-200',
+    accentIcon: 'text-slate-500',
+  },
+  blue: {
+    headerGradient: 'from-sky-600 to-indigo-600',
+    statGradient: 'from-sky-50 to-white',
+    statBorder: 'border-sky-200',
+    iconActive: 'bg-sky-600 text-white shadow-lg border border-sky-600',
+    iconComplete: 'bg-sky-100 text-sky-700 border border-sky-200',
+    accentIcon: 'text-sky-500',
+  },
+  green: {
+    headerGradient: 'from-emerald-600 to-emerald-700',
+    statGradient: 'from-emerald-50 to-white',
+    statBorder: 'border-emerald-200',
+    iconActive: 'bg-emerald-600 text-white shadow-lg border border-emerald-600',
+    iconComplete: 'bg-emerald-100 text-emerald-700 border border-emerald-200',
+    accentIcon: 'text-emerald-500',
+  },
+  purple: {
+    headerGradient: 'from-violet-600 to-fuchsia-600',
+    statGradient: 'from-violet-50 to-white',
+    statBorder: 'border-violet-200',
+    iconActive: 'bg-violet-600 text-white shadow-lg border border-violet-600',
+    iconComplete: 'bg-violet-100 text-violet-700 border border-violet-200',
+    accentIcon: 'text-violet-500',
+  },
+  yellow: {
+    headerGradient: 'from-amber-500 to-amber-600',
+    statGradient: 'from-amber-50 to-white',
+    statBorder: 'border-amber-200',
+    iconActive: 'bg-amber-500 text-white shadow-lg border border-amber-500',
+    iconComplete: 'bg-amber-100 text-amber-700 border border-amber-200',
+    accentIcon: 'text-amber-500',
+  },
+  orange: {
+    headerGradient: 'from-orange-500 to-rose-500',
+    statGradient: 'from-orange-50 to-white',
+    statBorder: 'border-orange-200',
+    iconActive: 'bg-orange-500 text-white shadow-lg border border-orange-500',
+    iconComplete: 'bg-orange-100 text-orange-700 border border-orange-200',
+    accentIcon: 'text-orange-500',
+  },
+} as const;
+
+const ICON_UPCOMING = 'bg-gray-100 text-gray-400 border border-gray-200';
+
+type ColorKey = keyof typeof COLOR_THEMES;
+
+const PATH_OPTIONS = {
+  path1: {
+    label: "Priya's Journey",
+    subtitle: 'Patna → NIT → Microsoft',
+    gradient: 'from-sky-500 to-indigo-500',
+    icon: GraduationCap,
+  },
+  path2: {
+    label: "Ravi's Journey",
+    subtitle: 'Tier-3 College → Razorpay',
+    gradient: 'from-orange-500 to-rose-500',
+    icon: Sparkles,
+  },
+} as const;
+
+type PathKey = keyof typeof PATH_OPTIONS;
+
+type JourneyStage = {
+  stage: string;
+  pillar: string;
+  icon: LucideIcon;
+  color: ColorKey;
+  time: string;
+  situation: {
+    before: string;
+    problem: string;
+    emotion: string;
+  };
+  action: string;
+  outcome: string;
+  benefits?: string[];
+  stats?: Record<string, string>;
+};
 
 export default function UserJourneySection() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [currentStage, setCurrentStage] = useState(0);
-  const [selectedPath, setSelectedPath] = useState<'path1' | 'path2'>('path1');
+  const [selectedPath, setSelectedPath] = useState<PathKey>('path1');
 
   // Priya's Journey - The 99% student story
-  const journeyPath1 = [
+  const journeyPath1: JourneyStage[] = [
     {
       stage: 'The Reality',
       pillar: 'Starting Point',
-      icon: User,
-      color: 'gray',
+      icon: MapPin,
+      color: 'gray' as ColorKey,
       time: 'Class 11',
       situation: {
         before: "Priya from Patna, studying in local school",
@@ -46,8 +144,8 @@ export default function UserJourneySection() {
     {
       stage: 'The Preparation',
       pillar: 'Learn + Verify',
-      icon: BookOpen,
-      color: 'blue',
+      icon: GraduationCap,
+      color: 'blue' as ColorKey,
       time: 'Class 12',
       situation: {
         before: "Preparing for JEE with ScaleUp",
@@ -71,8 +169,8 @@ export default function UserJourneySection() {
     {
       stage: 'College + Earning',
       pillar: 'Grow + Earn',
-      icon: DollarSign,
-      color: 'green',
+      icon: Coins,
+      color: 'green' as ColorKey,
       time: 'Year 1-2',
       situation: {
         before: "At NIT, but family still struggling financially",
@@ -97,7 +195,7 @@ export default function UserJourneySection() {
       stage: 'Skill Building',
       pillar: 'Personalized Growth',
       icon: Brain,
-      color: 'purple',
+      color: 'purple' as ColorKey,
       time: 'Year 3',
       situation: {
         before: "Wants to crack product companies but lacks guidance",
@@ -121,8 +219,8 @@ export default function UserJourneySection() {
     {
       stage: 'The Outcome',
       pillar: 'Career Success',
-      icon: Trophy,
-      color: 'yellow',
+      icon: Medal,
+      color: 'yellow' as ColorKey,
       time: 'Year 4',
       situation: {
         before: "Placement season at NIT",
@@ -146,12 +244,12 @@ export default function UserJourneySection() {
   ];
 
   // Alternative Path - When top college doesn't happen
-  const journeyPath2 = [
+  const journeyPath2: JourneyStage[] = [
     {
       stage: 'The Reality',
       pillar: 'Starting Point',
-      icon: User,
-      color: 'gray',
+      icon: Compass,
+      color: 'gray' as ColorKey,
       time: 'After 12th',
       situation: {
         before: "Ravi from Tier-3 city, couldn't crack JEE",
@@ -165,14 +263,13 @@ export default function UserJourneySection() {
         "Can compete on skills, not degree",
         "Affordable at ₹99/month",
         "Hope restored"
-      ],
-      stats: null
+      ]
     },
     {
       stage: 'Skill First',
       pillar: 'Learn Differently',
-      icon: Zap,
-      color: 'orange',
+      icon: Sparkles,
+      color: 'orange' as ColorKey,
       time: 'Year 1-2',
       situation: {
         before: "Local college has outdated curriculum",
@@ -196,8 +293,8 @@ export default function UserJourneySection() {
     {
       stage: 'Building Credibility',
       pillar: 'Verification Advantage',
-      icon: Award,
-      color: 'green',
+      icon: BadgeCheck,
+      color: 'green' as ColorKey,
       time: 'Year 3',
       situation: {
         before: "Has skills but no brand college tag",
@@ -222,7 +319,7 @@ export default function UserJourneySection() {
       stage: 'The Breakthrough',
       pillar: 'Network Effect',
       icon: Users,
-      color: 'blue',
+      color: 'blue' as ColorKey,
       time: 'Year 4',
       situation: {
         before: "Final year, placement season",
@@ -246,8 +343,8 @@ export default function UserJourneySection() {
     {
       stage: 'Giving Back',
       pillar: 'Creating Opportunity',
-      icon: Heart,
-      color: 'purple',
+      icon: HeartHandshake,
+      color: 'purple' as ColorKey,
       time: 'Post-Placement',
       situation: {
         before: "Secured job at Razorpay",
@@ -271,7 +368,14 @@ export default function UserJourneySection() {
   ];
 
   const journey = selectedPath === 'path1' ? journeyPath1 : journeyPath2;
-  const current = journey[currentStage];
+  const activeStage = journey.length ? Math.min(Math.max(currentStage, 0), journey.length - 1) : 0;
+  const current = journey[activeStage];
+  const currentTheme = current ? COLOR_THEMES[current.color] ?? COLOR_THEMES.gray : COLOR_THEMES.gray;
+  const progressPercent = journey.length > 1 ? (activeStage / (journey.length - 1)) * 100 : 0;
+
+  if (!current) {
+    return null;
+  }
 
   return (
     <section id="journey" className="min-h-screen py-10 md:py-20 bg-gradient-to-b from-white via-gray-50 to-white">
@@ -308,33 +412,46 @@ export default function UserJourneySection() {
           </p>
 
           {/* Path Selector */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button
-              onClick={() => {
-                setSelectedPath('path1');
-                setCurrentStage(0);
-              }}
-              className={`px-6 py-3 rounded-full font-semibold transition-all ${
-                selectedPath === 'path1' 
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white' 
-                  : 'bg-gray-200 text-gray-700'
-              }`}
-            >
-              Path 1: Priya's Journey (Patna → NIT → Microsoft)
-            </button>
-            <button
-              onClick={() => {
-                setSelectedPath('path2');
-                setCurrentStage(0);
-              }}
-              className={`px-6 py-3 rounded-full font-semibold transition-all ${
-                selectedPath === 'path2' 
-                  ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white' 
-                  : 'bg-gray-200 text-gray-700'
-              }`}
-            >
-              Path 2: Ravi's Journey (Tier-3 College → Razorpay)
-            </button>
+          <div className="grid gap-4 sm:grid-cols-2 max-w-3xl mx-auto">
+            {Object.entries(PATH_OPTIONS).map(([key, meta]) => {
+              const typedKey = key as PathKey;
+              const isActive = selectedPath === typedKey;
+              const Icon = meta.icon;
+
+              return (
+                <button
+                  key={typedKey}
+                  onClick={() => {
+                    setSelectedPath(typedKey);
+                    setCurrentStage(0);
+                  }}
+                  className={`group flex items-center gap-4 rounded-2xl border p-4 md:p-5 transition-all duration-200 ${
+                    isActive
+                      ? `bg-gradient-to-r ${meta.gradient} text-white shadow-lg border-transparent`
+                      : 'bg-white text-gray-700 border-gray-200 hover:border-gray-300 hover:shadow-md'
+                  }`}
+                  aria-pressed={isActive}
+                >
+                  <span
+                    className={`flex h-12 w-12 items-center justify-center rounded-full transition-colors ${
+                      isActive
+                        ? 'bg-white/20 text-white'
+                        : 'bg-gray-100 text-gray-600 group-hover:bg-gray-200'
+                    }`}
+                  >
+                    <Icon className="h-6 w-6" />
+                  </span>
+                  <span className="flex flex-col text-left">
+                    <span className="text-base md:text-lg font-semibold">
+                      {meta.label}
+                    </span>
+                    <span className={`text-sm md:text-base ${isActive ? 'text-white/80' : 'text-gray-500'}`}>
+                      {meta.subtitle}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </motion.div>
 
@@ -348,42 +465,50 @@ export default function UserJourneySection() {
           {/* Timeline */}
           <div className="flex items-center justify-between relative mb-8 overflow-x-auto pb-4">
             <div className="absolute inset-x-0 top-6 h-1 bg-gray-200" />
-            <div 
-              className="absolute top-6 h-1 bg-gradient-to-r from-blue-500 via-green-500 to-orange-500 transition-all duration-500"
-              style={{ width: `${(currentStage / (journey.length - 1)) * 100}%` }}
+            <div
+              className="absolute top-6 h-1 bg-gradient-to-r from-sky-500 via-emerald-500 to-orange-500 transition-all duration-500"
+              style={{ width: `${progressPercent}%` }}
             />
             
-            {journey.map((step, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentStage(index)}
-                className={`relative z-10 transition-all flex-shrink-0 ${
-                  index === currentStage ? 'scale-110' : 'scale-90'
-                }`}
-              >
-                <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all ${
-                  index === currentStage 
-                    ? `bg-${step.color}-500 text-white shadow-lg` 
-                    : index < currentStage 
-                      ? `bg-${step.color}-200 text-${step.color}-700`
-                      : 'bg-gray-100 text-gray-400'
-                }`}>
-                  <step.icon className="w-6 h-6 md:w-7 md:h-7" />
-                </div>
-                <p className={`absolute top-16 left-1/2 -translate-x-1/2 text-xs whitespace-nowrap ${
-                  index === currentStage ? 'font-bold text-gray-800' : 'text-gray-600'
-                }`}>
-                  {step.time}
-                </p>
-              </button>
-            ))}
+            {journey.map((step, index) => {
+              const stepTheme = COLOR_THEMES[step.color] ?? COLOR_THEMES.gray;
+
+              return (
+                <button
+                  key={index}
+                  onClick={() => setCurrentStage(index)}
+                  className={`relative z-10 transition-all flex-shrink-0 ${
+                    index === activeStage ? 'scale-110' : 'scale-95 hover:scale-100'
+                  }`}
+                >
+                  <div
+                    className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all ${
+                      index === activeStage
+                        ? stepTheme.iconActive
+                        : index < activeStage
+                          ? stepTheme.iconComplete
+                          : ICON_UPCOMING
+                    }`}
+                  >
+                    <step.icon className="w-6 h-6 md:w-7 md:h-7" />
+                  </div>
+                  <p
+                    className={`absolute top-16 left-1/2 -translate-x-1/2 text-xs whitespace-nowrap ${
+                      index === activeStage ? 'font-bold text-gray-800' : 'text-gray-600'
+                    }`}
+                  >
+                    {step.time}
+                  </p>
+                </button>
+              );
+            })}
           </div>
         </motion.div>
 
         {/* Current Stage Detail */}
         <AnimatePresence mode="wait">
           <motion.div
-            key={`${selectedPath}-${currentStage}`}
+            key={`${selectedPath}-${activeStage}`}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
@@ -392,14 +517,19 @@ export default function UserJourneySection() {
           >
             <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl overflow-hidden">
               {/* Stage Header */}
-              <div className={`bg-gradient-to-r from-${current.color}-500 to-${current.color}-600 p-6 md:p-8 text-white`}>
+              <div className={`bg-gradient-to-r ${currentTheme.headerGradient} p-6 md:p-8 text-white`}>
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  <div>
-                    <p className="text-sm md:text-base opacity-90">{current.time}</p>
-                    <h3 className="text-xl md:text-3xl font-bold">{current.stage}</h3>
-                    <p className="text-base md:text-lg mt-2">{current.pillar}</p>
+                  <div className="flex items-start gap-4">
+                    <div className="hidden md:flex h-14 w-14 items-center justify-center rounded-full bg-white/15">
+                      <current.icon className="h-7 w-7 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm md:text-base opacity-90">{current.time}</p>
+                      <h3 className="text-xl md:text-3xl font-bold">{current.stage}</h3>
+                      <p className="text-base md:text-lg mt-2 opacity-90">{current.pillar}</p>
+                    </div>
                   </div>
-                  <div className="text-3xl md:text-4xl">
+                  <div className="text-3xl md:text-4xl" aria-hidden>
                     {current.situation.emotion}
                   </div>
                 </div>
@@ -447,7 +577,9 @@ export default function UserJourneySection() {
                         <div className="space-y-2">
                           {current.benefits.map((benefit, idx) => (
                             <div key={idx} className="flex items-start gap-3">
-                              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                              <CheckCircle
+                                className={`w-5 h-5 ${currentTheme.accentIcon} flex-shrink-0 mt-0.5`}
+                              />
                               <p className="text-sm md:text-base">{benefit}</p>
                             </div>
                           ))}
@@ -460,7 +592,10 @@ export default function UserJourneySection() {
                         <h4 className="font-bold text-lg mb-3">The Numbers</h4>
                         <div className="grid grid-cols-3 gap-3">
                           {Object.entries(current.stats).map(([key, value]) => (
-                            <div key={key} className={`bg-gradient-to-br from-${current.color}-50 to-white rounded-lg p-3 text-center border border-${current.color}-200`}>
+                            <div
+                              key={key}
+                              className={`bg-gradient-to-br ${currentTheme.statGradient} rounded-lg p-3 text-center border ${currentTheme.statBorder}`}
+                            >
                               <p className="text-lg md:text-xl font-bold text-gray-800">{value}</p>
                               <p className="text-xs text-gray-600 capitalize">
                                 {key.replace(/([A-Z])/g, ' $1').trim()}
@@ -476,18 +611,18 @@ export default function UserJourneySection() {
                 {/* Navigation */}
                 <div className="flex justify-between items-center mt-6 pt-6 border-t">
                   <button
-                    onClick={() => setCurrentStage(Math.max(0, currentStage - 1))}
-                    disabled={currentStage === 0}
+                    onClick={() => setCurrentStage(Math.max(0, activeStage - 1))}
+                    disabled={activeStage === 0}
                     className="px-4 py-2 rounded-lg bg-gray-100 disabled:opacity-50 font-semibold"
                   >
                     ← Previous
                   </button>
                   <span className="text-sm font-medium text-gray-600">
-                    Stage {currentStage + 1} of {journey.length}
+                    Stage {activeStage + 1} of {journey.length}
                   </span>
                   <button
-                    onClick={() => setCurrentStage(Math.min(journey.length - 1, currentStage + 1))}
-                    disabled={currentStage === journey.length - 1}
+                    onClick={() => setCurrentStage(Math.min(journey.length - 1, activeStage + 1))}
+                    disabled={activeStage === journey.length - 1}
                     className="px-4 py-2 rounded-lg bg-gray-100 disabled:opacity-50 font-semibold"
                   >
                     Next →

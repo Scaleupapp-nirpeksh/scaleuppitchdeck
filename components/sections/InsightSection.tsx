@@ -304,7 +304,7 @@ export default function InsightSection() {
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-purple-600">{validation.quizTime} min</div>
-                <p className="text-sm text-gray-600">Engagement Time</p>
+                <p className="text-sm text-gray-600">Quiz Time</p>
               </div>
             </div>
             

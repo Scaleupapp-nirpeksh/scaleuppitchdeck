@@ -13,10 +13,15 @@ import TractionSection from '@/components/sections/TractionSection';
 import RoadmapSection from '@/components/sections/RoadmapSection';
 import AskSection from '@/components/sections/AskSection';
 import ContactSection from '@/components/sections/ContactSection';
+import CompetitiveSection from '@/components/sections/CompetitiveSection';
+import RevenueSection from '@/components/sections/RevenueSection';
+import ProfitabilitySection from '@/components/sections/ProfitabilitySection';
+
+
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(1);
-  const totalSections = 15;
+  const totalSections = 12;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,6 +78,9 @@ export default function Home() {
         <UserJourneySection />
         <TractionSection />
         <RoadmapSection />
+        <CompetitiveSection /> 
+        <RevenueSection /> 
+        <ProfitabilitySection /> 
         <TeamSection />
         <AskSection />
         <ContactSection />
