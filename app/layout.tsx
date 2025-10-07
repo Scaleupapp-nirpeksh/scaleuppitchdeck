@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'ScaleUp - The Learning Operating System | Investor Pitch',
+  title: 'ScaleUp | Investor Pitch',
   description: "India's first platform connecting knowledge to careers. 50M students transforming learning into verified skills and job opportunities.",
   keywords: 'ScaleUp, edtech, learning platform, India, education technology, career platform',
   authors: [{ name: 'ScaleUp' }],
