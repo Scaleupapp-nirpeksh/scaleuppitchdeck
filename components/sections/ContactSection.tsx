@@ -19,7 +19,7 @@ export default function ContactSection() {
       id: 'nirpeksh',
       name: 'Nirpeksh Nandan',
       role: 'Co-founder & CEO',
-      focus: 'Product & Technology',
+      focus: 'Product, Ops & Technology',
       email: 'nirpeksh@scaleupapp.club',
       phone: '+91 8800237144',
       linkedin: 'https://www.linkedin.com/in/nirpekshnandan/',
@@ -29,7 +29,7 @@ export default function ContactSection() {
     {
       id: 'pratiksha',
       name: 'Pratiksha Sinha',
-      role: 'Co-founder',
+      role: 'Co-founder & CMO',
       focus: 'Marketing & Growth',
       email: 'pratiksha@scaleupapp.club',
       phone: '+91 7875399406',
