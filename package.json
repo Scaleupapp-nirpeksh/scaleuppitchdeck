@@ -9,17 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "14.0.4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "framer-motion": "^10.16.16",
-    "recharts": "^2.10.3",
-    "react-intersection-observer": "^9.5.3",
-    "react-countup": "^6.5.0",
-    "lucide-react": "^0.303.0",
-    "jspdf": "^2.5.1",
-    "html2canvas": "^1.4.1",
     "clsx": "^2.0.0",
+    "framer-motion": "^10.16.16",
+    "html2canvas": "^1.4.1",
+    "lucide-react": "^0.303.0",
+    "next": "14.0.4",
+    "pptxgenjs": "^4.0.1",
+    "react": "18.2.0",
+    "react-countup": "^6.5.0",
+    "react-dom": "18.2.0",
+    "react-intersection-observer": "^9.5.3",
+    "recharts": "^2.10.3",
     "tailwind-merge": "^2.2.0"
   },
   "devDependencies": {

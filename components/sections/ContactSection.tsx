@@ -8,6 +8,7 @@ import {
   CheckCircle, Copy, ExternalLink, Sparkles
 } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
+import { downloadPitchDeckPpt } from '@/lib/pptxExport';
 
 export default function ContactSection() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -41,25 +42,30 @@ export default function ContactSection() {
 
   const quickActions = [
     {
+      icon: Download,
+      title: 'Download Pitch Deck',
+      description: 'Polished PPT export, ready to share',
+      action: () => downloadPitchDeckPpt(),
+      bgClass: 'bg-blue-100',
+      iconColor: 'text-blue-600'
+    },
+    {
       icon: Calendar,
       title: 'Schedule Meeting',
       description: 'Book a 30-min call',
       action: () => window.open('https://calendly.com/scaleup', '_blank'),
-      color: 'indigo'
-    },
-    {
-      icon: Download,
-      title: 'Download Deck',
-      description: 'PDF presentation',
-      action: () => window.print(),
-      color: 'green'
+      bgClass: 'bg-indigo-100',
+      iconColor: 'text-indigo-600'
     },
     {
       icon: MessageCircle,
       title: 'Quick Message',
       description: 'Send us an email',
-      action: () => window.location.href = 'mailto:team@scaleupapp.club',
-      color: 'purple'
+      action: () => {
+        window.location.href = 'mailto:admin@scaleupapp.club';
+      },
+      bgClass: 'bg-purple-100',
+      iconColor: 'text-purple-600'
     }
   ];
 
@@ -232,7 +238,7 @@ export default function ContactSection() {
         >
           <h3 className="text-xl font-bold text-center mb-8 text-gray-800">Quick Actions</h3>
           
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid gap-6 sm:grid-cols-2 justify-items-center max-w-4xl mx-auto">
             {quickActions.map((action, index) => (
               <motion.button
                 key={action.title}
@@ -242,10 +248,10 @@ export default function ContactSection() {
                 onClick={action.action}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all group"
+                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all group text-center w-full max-w-xs flex flex-col items-center"
               >
-                <div className={`w-14 h-14 bg-${action.color}-100 rounded-lg flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform`}>
-                  <action.icon className={`w-7 h-7 text-${action.color}-600`} />
+                <div className={`w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform ${action.bgClass}`}>
+                  <action.icon className={`w-7 h-7 ${action.iconColor}`} />
                 </div>
                 <h4 className="font-semibold text-gray-800 mb-1">{action.title}</h4>
                 <p className="text-sm text-gray-600">{action.description}</p>

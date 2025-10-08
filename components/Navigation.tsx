@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, Download, ChevronDown } from 'lucide-react';
+import { downloadPitchDeckPpt } from '@/lib/pptxExport';
 
 interface NavigationProps {
   currentSection: number;
@@ -46,9 +47,13 @@ export default function Navigation({ currentSection, totalSections }: Navigation
     setIsMobileMenuOpen(false);
   };
 
-  const handleDownloadPDF = () => {
-    window.print();
-  };
+  const handleDownloadPpt = useCallback(async () => {
+    try {
+      await downloadPitchDeckPpt();
+    } catch (error) {
+      console.error('Failed to generate PPT deck', error);
+    }
+  }, []);
   
   // Determine the active section ID based on the current index
   const activeSectionId = navItems[currentSection - 1]?.id;
@@ -97,12 +102,16 @@ export default function Navigation({ currentSection, totalSections }: Navigation
                   </button>
                 )
               })}
+
+            </div>
+
+            <div className="hidden md:flex items-center">
               <button
-                onClick={handleDownloadPDF}
-                className="ml-4 flex items-center space-x-2 bg-yellow-400 text-slate-900 font-semibold px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors shadow-sm"
+                onClick={handleDownloadPpt}
+                className="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm transition hover:bg-yellow-300"
               >
                 <Download className="w-4 h-4" />
-                <span>Download PDF</span>
+                <span>Download PPT</span>
               </button>
             </div>
 
@@ -147,16 +156,19 @@ export default function Navigation({ currentSection, totalSections }: Navigation
           ))}
           <motion.button
             initial={{ opacity: 0, y: 20 }}
-            animate={{ 
-              opacity: isMobileMenuOpen ? 1 : 0, 
-              y: isMobileMenuOpen ? 0 : 20 
+            animate={{
+              opacity: isMobileMenuOpen ? 1 : 0,
+              y: isMobileMenuOpen ? 0 : 20
             }}
             transition={{ delay: navItems.length * 0.05 }}
-            onClick={handleDownloadPDF}
+            onClick={async () => {
+              setIsMobileMenuOpen(false);
+              await handleDownloadPpt();
+            }}
             className="w-full mt-6 flex items-center justify-center space-x-2 bg-yellow-400 text-slate-900 font-semibold px-4 py-3 rounded-md hover:bg-yellow-500 transition-colors shadow-sm"
           >
             <Download className="w-5 h-5" />
-            <span>Download PDF</span>
+            <span>Download PPT</span>
           </motion.button>
         </div>
       </motion.div>
