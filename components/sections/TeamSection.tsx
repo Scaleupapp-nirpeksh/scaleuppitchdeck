@@ -68,7 +68,7 @@ export default function TeamSection() {
     },
     {
       id: 'pratiksha',
-      name: 'Pratiksha Nandan',
+      name: 'Pratiksha Sinha',
       role: 'Co-founder & CMO',
       expertise: 'Marketing, Growth & Strategy',
       experience: '10+ years',
