@@ -14,14 +14,12 @@ interface NavigationProps {
 const navItems = [
     { id: 'hero', label: 'Home' },
     { id: 'problem', label: 'Problem' },
-    { id: 'insight', label: 'Insight' },
     { id: 'solution', label: 'Solution' },
-    { id: 'user-journey', label: 'Journey' },
-    { id: 'traction', label: 'Traction' },
-    { id: 'roadmap', label: 'Roadmap' },
+    { id: 'insight', label: 'Insight' },
     { id: 'competitive', label: 'Our Edge' },
+    { id: 'traction', label: 'Traction' },
     { id: 'revenue', label: 'Revenue Model' },
-    { id: 'profitability', label: 'Profitability' },
+    { id: 'roadmap', label: 'Roadmap' },
     { id: 'team', label: 'Team' },
     { id: 'ask', label: 'The Ask' },
     { id: 'contact', label: 'Contact' },
@@ -105,15 +103,7 @@ export default function Navigation({ currentSection, totalSections }: Navigation
 
             </div>
 
-            <div className="hidden md:flex items-center">
-              <button
-                onClick={handleDownloadPpt}
-                className="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm transition hover:bg-yellow-300"
-              >
-                <Download className="w-4 h-4" />
-                <span>Download PPT</span>
-              </button>
-            </div>
+           
 
             {/* Mobile Menu Toggle with Accessibility Attributes */}
             <button

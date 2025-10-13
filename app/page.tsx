@@ -20,7 +20,7 @@ import ProfitabilitySection from '@/components/sections/ProfitabilitySection';
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(1);
-  const totalSections = 13;
+  const totalSections = 11;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,14 +71,12 @@ export default function Home() {
       <main className="relative">
         <HeroSection />
         <ProblemSection />
-        <InsightSection />
         <SolutionSection />
-        <UserJourneySection />
-        <TractionSection />
-        <RoadmapSection />
+        <InsightSection />
         <CompetitiveSection /> 
+        <TractionSection />
         <RevenueSection /> 
-        <ProfitabilitySection /> 
+        <RoadmapSection />
         <TeamSection />
         <AskSection />
         <ContactSection />

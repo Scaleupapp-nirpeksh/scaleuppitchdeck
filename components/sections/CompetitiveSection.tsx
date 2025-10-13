@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Check, X, Minus, ChevronDown, ChevronUp, Info, 
-  TrendingUp, Users, Brain, Award, Briefcase, 
+import {
+  Check, X, Minus, ChevronDown, Info,
+  TrendingUp, Users, Brain, Award, Briefcase,
   Youtube, Sparkles, ChevronLeft, ChevronRight,
-  BookOpen, Bot, Building2, Target,Trophy
+  BookOpen, Bot, Building2, Target, Trophy
 } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 
@@ -17,113 +17,126 @@ export default function CompetitiveSection() {
   const [viewMode, setViewMode] = useState<'features' | 'business'>('features');
   const [mobileCardIndex, setMobileCardIndex] = useState(0);
 
-  // Competitor data
+  // Tailwind-safe color styles for competitors
+  const colorStyles: Record<
+    'red' | 'purple' | 'blue' | 'green' | 'teal' | 'orange',
+    { bg: string; text: string; ring: string }
+  > = {
+    red:    { bg: 'bg-red-100',    text: 'text-red-600',    ring: 'ring-red-200' },
+    purple: { bg: 'bg-purple-100', text: 'text-purple-600', ring: 'ring-purple-200' },
+    blue:   { bg: 'bg-blue-100',   text: 'text-blue-600',   ring: 'ring-blue-200' },
+    green:  { bg: 'bg-green-100',  text: 'text-green-600',  ring: 'ring-green-200' },
+    teal:   { bg: 'bg-teal-100',   text: 'text-teal-600',   ring: 'ring-teal-200' },
+    orange: { bg: 'bg-orange-100', text: 'text-orange-600', ring: 'ring-orange-200' },
+  };
+
+  // --- DATA (kept exactly as you provided) ---
   const competitors = [
     {
       id: 'youtube',
       name: 'YouTube',
       icon: Youtube,
-      color: 'red',
+      color: 'red' as const,
       description: 'Unlimited content, but no learning structure or verification',
       features: {
         engagingContent: { status: 'yes', detail: 'Infinite variety, algorithm-driven discovery' },
         proofOfLearning: { status: 'no', detail: 'No way to verify if learning happened' },
         aiPersonalization: { status: 'no', detail: 'Entertainment-focused recommendations only' },
         careerOutcomes: { status: 'no', detail: 'Not designed for career progression' },
-        retentionRate: { value: null, detail: 'Not applicable - entertainment platform' }
+        retentionRate: { value: null, detail: 'Not applicable - entertainment platform' },
       },
       businessModel: {
         revenue: 'Ads + Premium',
         pricing: 'Free / ₹129/month',
         marketCap: '$200B+',
-        userBase: '2.7B users'
-      }
+        userBase: '2.7B users',
+      },
     },
     {
       id: 'unacademy',
       name: 'Unacademy / PhysicsWallah',
       icon: BookOpen,
-      color: 'purple',
+      color: 'purple' as const,
       description: 'Traditional online coaching with celebrity teachers',
       features: {
         engagingContent: { status: 'yes', detail: 'Live classes and recorded lectures' },
         proofOfLearning: { status: 'partial', detail: 'Basic tests, not continuous verification' },
         aiPersonalization: { status: 'no', detail: 'One-size-fits-all approach' },
         careerOutcomes: { status: 'no', detail: 'Focus only on exam cracking' },
-        retentionRate: { value: 35, detail: '30-40% average retention' }
+        retentionRate: { value: 35, detail: '30-40% average retention' },
       },
       businessModel: {
         revenue: 'Course Sales',
         pricing: '₹3,000-50,000/course',
         marketCap: '$800M (down from $3.4B)',
-        userBase: '50M+ learners'
-      }
+        userBase: '50M+ learners',
+      },
     },
     {
       id: 'linkedin',
       name: 'LinkedIn',
       icon: Building2,
-      color: 'blue',
+      color: 'blue' as const,
       description: 'Professional network with learning add-on',
       features: {
         engagingContent: { status: 'no', detail: 'Dry, corporate-style courses' },
         proofOfLearning: { status: 'no', detail: 'Certificates without real verification' },
         aiPersonalization: { status: 'no', detail: 'Generic course recommendations' },
         careerOutcomes: { status: 'yes', detail: 'Strong job network and visibility' },
-        retentionRate: { value: null, detail: 'Not disclosed for Learning product' }
+        retentionRate: { value: null, detail: 'Not disclosed for Learning product' },
       },
       businessModel: {
         revenue: 'Subscriptions + Ads',
         pricing: '₹1,500/month',
         marketCap: 'Part of $700B Microsoft',
-        userBase: '950M professionals'
-      }
+        userBase: '950M professionals',
+      },
     },
     {
       id: 'duolingo',
       name: 'Duolingo',
       icon: Target,
-      color: 'green',
+      color: 'green' as const,
       description: 'Gamified language learning with strong engagement',
       features: {
         engagingContent: { status: 'yes', detail: 'Bite-sized, gamified lessons' },
         proofOfLearning: { status: 'yes', detail: 'Continuous assessment and streaks' },
         aiPersonalization: { status: 'yes', detail: 'Adaptive difficulty and pacing' },
         careerOutcomes: { status: 'no', detail: 'Limited career application' },
-        retentionRate: { value: 70, detail: 'Industry-leading 70% retention' }
+        retentionRate: { value: 70, detail: 'Industry-leading 70% retention' },
       },
       businessModel: {
         revenue: 'Freemium + Ads',
         pricing: 'Free / ₹500/month',
         marketCap: '$8B',
-        userBase: '500M+ users'
-      }
+        userBase: '500M+ users',
+      },
     },
     {
       id: 'chatgpt',
       name: 'ChatGPT',
       icon: Bot,
-      color: 'teal',
+      color: 'teal' as const,
       description: 'AI tutor without structure or verification',
       features: {
         engagingContent: { status: 'no', detail: 'Text-based Q&A, not engaging content' },
         proofOfLearning: { status: 'no', detail: 'No assessment or tracking' },
         aiPersonalization: { status: 'yes', detail: 'Highly personalized responses' },
         careerOutcomes: { status: 'no', detail: 'Tool, not career platform' },
-        retentionRate: { value: null, detail: 'Not a learning platform metric' }
+        retentionRate: { value: null, detail: 'Not a learning platform metric' },
       },
       businessModel: {
         revenue: 'Subscriptions',
         pricing: 'Free / ₹1,500/month',
         marketCap: '$90B valuation',
-        userBase: '180M+ users'
-      }
+        userBase: '180M+ users',
+      },
     },
     {
       id: 'scaleup',
       name: 'ScaleUp',
       icon: Sparkles,
-      color: 'orange',
+      color: 'orange' as const,
       isHighlighted: true,
       description: 'The only platform that combines everything students need',
       features: {
@@ -131,94 +144,59 @@ export default function CompetitiveSection() {
         proofOfLearning: { status: 'yes', detail: '2-min quizzes with continuous verification' },
         aiPersonalization: { status: 'yes', detail: 'AI roadmaps + weak area targeting' },
         careerOutcomes: { status: 'yes', detail: 'CLIP scores → direct job matching' },
-        retentionRate: { value: 55, target: 65, detail: '55% current → 65% target' }
+        retentionRate: { value: 55, target: 65, detail: '55% current → 65% target' },
       },
       businessModel: {
         revenue: 'Freemium + B2B + Hiring',
         pricing: 'Free / ₹499/month',
         marketCap: 'Raising ₹4Cr Pre-Seed',
-        userBase: '350 → 100K target'
-      }
-    }
+        userBase: '350 → 100K target',
+      },
+    },
   ];
 
-  // Feature columns
   const featureColumns = [
-    {
-      id: 'engagingContent',
-      name: 'Engaging Content',
-      icon: Users,
-      tooltip: 'Content that students actually want to consume'
-    },
-    {
-      id: 'proofOfLearning',
-      name: 'Proof of Learning',
-      icon: Award,
-      tooltip: 'Verified evidence that learning occurred'
-    },
-    {
-      id: 'aiPersonalization',
-      name: 'AI Personalization',
-      icon: Brain,
-      tooltip: 'Adaptive learning paths based on individual needs'
-    },
-    {
-      id: 'careerOutcomes',
-      name: 'Career Outcomes',
-      icon: Briefcase,
-      tooltip: 'Direct path from learning to employment'
-    },
-    {
-      id: 'retentionRate',
-      name: 'Retention Rate',
-      icon: TrendingUp,
-      tooltip: 'Percentage of users active after 30 days'
-    }
-  ];
+    { id: 'engagingContent', name: 'Engaging Content', icon: Users, tooltip: 'Content that students actually want to consume' },
+    { id: 'proofOfLearning', name: 'Proof of Learning', icon: Award, tooltip: 'Verified evidence that learning occurred' },
+    { id: 'aiPersonalization', name: 'AI Personalization', icon: Brain, tooltip: 'Adaptive learning paths based on individual needs' },
+    { id: 'careerOutcomes', name: 'Career Outcomes', icon: Briefcase, tooltip: 'Direct path from learning to employment' },
+    { id: 'retentionRate', name: 'Retention Rate', icon: TrendingUp, tooltip: 'Percentage of users active after 30 days' },
+  ] as const;
 
-  // Status rendering
   const renderStatus = (status: string) => {
     switch (status) {
-      case 'yes':
-        return <Check className="w-5 h-5 text-green-500" />;
-      case 'no':
-        return <X className="w-5 h-5 text-red-500" />;
-      case 'partial':
-        return <Minus className="w-5 h-5 text-yellow-500" />;
-      default:
-        return <span className="text-gray-400 text-sm">N/A</span>;
+      case 'yes':     return <Check className="w-5 h-5 text-green-500" />;
+      case 'no':      return <X className="w-5 h-5 text-red-500" />;
+      case 'partial': return <Minus className="w-5 h-5 text-yellow-500" />;
+      default:        return <span className="text-gray-400 text-sm">N/A</span>;
     }
   };
 
-  // Render retention rate bar
   const renderRetentionBar = (value: number | null, target?: number) => {
-    if (value === null) {
-      return <span className="text-gray-400 text-sm">N/A</span>;
-    }
-
+    if (value === null) return <span className="text-gray-400 text-sm">N/A</span>;
     return (
       <div className="flex items-center gap-2">
-        <div className="flex-1">
+        <div className="flex-1 min-w-[120px]">
           <div className="h-6 bg-gray-100 rounded-full overflow-hidden relative">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: inView ? `${value}%` : 0 }}
-              transition={{ duration: 1, delay: 0.5 }}
+              transition={{ duration: 1, delay: 0.4 }}
               className="h-full bg-gradient-to-r from-green-400 to-green-600"
             />
-            {target && (
+            {typeof target === 'number' && (
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: inView ? 0.5 : 0 }}
-                transition={{ delay: 1 }}
+                animate={{ opacity: inView ? 0.6 : 0 }}
+                transition={{ delay: 0.9 }}
                 className="absolute top-0 h-full border-r-2 border-dashed border-orange-500"
                 style={{ left: `${target}%` }}
               />
             )}
           </div>
         </div>
-        <span className="text-sm font-bold text-gray-700">
-          {value}%{target && ` → ${target}%`}
+        <span className="text-sm font-bold text-gray-700 whitespace-nowrap">
+          {value}%{typeof target === 'number' ? ` → ${target}%` : ''}
         </span>
       </div>
     );
@@ -227,7 +205,6 @@ export default function CompetitiveSection() {
   return (
     <section id="competitive" className="min-h-screen py-20 bg-gradient-to-b from-white via-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         {/* Header */}
         <motion.div
           ref={ref}
@@ -235,33 +212,39 @@ export default function CompetitiveSection() {
           animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
           className="text-center mb-12"
         >
-          <motion.div 
+          <motion.div
             className="inline-flex items-center gap-2 bg-orange-100 text-orange-800 px-4 py-2 rounded-full mb-6"
             initial={{ scale: 0 }}
             animate={{ scale: inView ? 1 : 0 }}
-            transition={{ delay: 0.2, type: "spring" }}
+            transition={{ delay: 0.2, type: 'spring' }}
           >
             <Target className="w-5 h-5" />
             <span className="font-semibold">Competitive Advantage</span>
           </motion.div>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="text-gray-800">Why</span>{' '}
+            <span className="text-gray-800">Why </span>
             <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
               ScaleUp Wins
             </span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            We're not competing with one platform. We're building what they all missed.
+            We&apos;re not competing with one platform. We&apos;re building what they all missed.
           </p>
 
           {/* View Mode Toggle */}
-          <div className="inline-flex items-center bg-gray-100 rounded-lg p-1">
+          <div
+            className="inline-flex items-center bg-gray-100 rounded-lg p-1"
+            role="tablist"
+            aria-label="Comparison view toggle"
+          >
             <button
               onClick={() => setViewMode('features')}
-              className={`px-4 py-2 rounded-md font-medium transition-all ${
-                viewMode === 'features' 
-                  ? 'bg-white text-gray-800 shadow-sm' 
+              role="tab"
+              aria-selected={viewMode === 'features'}
+              className={`px-4 py-2 rounded-md font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-300 ${
+                viewMode === 'features'
+                  ? 'bg-white text-gray-800 shadow-sm'
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
@@ -269,9 +252,11 @@ export default function CompetitiveSection() {
             </button>
             <button
               onClick={() => setViewMode('business')}
-              className={`px-4 py-2 rounded-md font-medium transition-all ${
-                viewMode === 'business' 
-                  ? 'bg-white text-gray-800 shadow-sm' 
+              role="tab"
+              aria-selected={viewMode === 'business'}
+              className={`px-4 py-2 rounded-md font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-300 ${
+                viewMode === 'business'
+                  ? 'bg-white text-gray-800 shadow-sm'
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
@@ -280,26 +265,26 @@ export default function CompetitiveSection() {
           </div>
         </motion.div>
 
-        {/* Desktop Comparison Table */}
+        {/* Desktop Table */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: inView ? 1 : 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.25 }}
           className="hidden lg:block"
         >
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <table className="w-full">
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden ring-1 ring-gray-200">
+            <table className="w-full text-sm">
               <thead>
                 <tr className="bg-gray-50 border-b-2 border-gray-200">
-                  <th className="text-left p-4 font-semibold text-gray-700">Platform</th>
+                  <th scope="col" className="text-left p-4 font-semibold text-gray-700">Platform</th>
                   {viewMode === 'features' ? (
-                    featureColumns.map(col => (
-                      <th key={col.id} className="text-center p-4 font-semibold text-gray-700">
+                    featureColumns.map((col) => (
+                      <th key={col.id} scope="col" className="text-center p-4 font-semibold text-gray-700">
                         <div className="flex flex-col items-center gap-2">
                           <col.icon className="w-5 h-5 text-gray-500" />
                           <span className="text-sm">{col.name}</span>
                           <div className="group relative">
-                            <Info className="w-4 h-4 text-gray-400 cursor-help" />
+                            <Info className="w-4 h-4 text-gray-400 cursor-help" aria-hidden />
                             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
                               {col.tooltip}
                             </div>
@@ -309,201 +294,165 @@ export default function CompetitiveSection() {
                     ))
                   ) : (
                     <>
-                      <th className="text-center p-4">Revenue Model</th>
-                      <th className="text-center p-4">Pricing</th>
-                      <th className="text-center p-4">Valuation</th>
-                      <th className="text-center p-4">User Base</th>
+                      <th scope="col" className="text-center p-4 font-semibold text-gray-700">Revenue Model</th>
+                      <th scope="col" className="text-center p-4 font-semibold text-gray-700">Pricing</th>
+                      <th scope="col" className="text-center p-4 font-semibold text-gray-700">Valuation</th>
+                      <th scope="col" className="text-center p-4 font-semibold text-gray-700">User Base</th>
                     </>
                   )}
                 </tr>
               </thead>
+
               <tbody>
-                {competitors.map((competitor) => (
-                  <React.Fragment key={competitor.id}>
-                    <motion.tr
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : -20 }}
-                      transition={{ delay: 0.4 + competitors.indexOf(competitor) * 0.05 }}
-                      className={`border-b transition-all cursor-pointer hover:bg-gray-50 ${
-                        competitor.isHighlighted 
-                          ? 'bg-gradient-to-r from-orange-50 to-yellow-50 font-medium' 
-                          : ''
-                      }`}
-                      onClick={() => setExpandedRow(expandedRow === competitor.id ? null : competitor.id)}
-                    >
-                      <td className="p-4">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-10 h-10 bg-${competitor.color}-100 rounded-lg flex items-center justify-center`}>
-                            <competitor.icon className={`w-6 h-6 text-${competitor.color}-600`} />
+                {competitors.map((competitor, idx) => {
+                  const cs = colorStyles[competitor.color];
+                  const Icon = competitor.icon;
+                  const isOpen = expandedRow === competitor.id;
+
+                  return (
+                    <React.Fragment key={competitor.id}>
+                      <motion.tr
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : -20 }}
+                        transition={{ delay: 0.35 + idx * 0.05 }}
+                        className={`border-b transition-colors cursor-pointer hover:bg-gray-50 ${
+                          competitor.isHighlighted ? 'bg-gradient-to-r from-orange-50 to-yellow-50' : ''
+                        }`}
+                        onClick={() => setExpandedRow(isOpen ? null : competitor.id)}
+                        aria-expanded={isOpen}
+                      >
+                        <td className="p-4">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-10 h-10 ${cs.bg} rounded-lg flex items-center justify-center ring-2 ${cs.ring}`}>
+                              <Icon className={`w-6 h-6 ${cs.text}`} />
+                            </div>
+                            <div>
+                              <p className="font-semibold text-gray-800">{competitor.name}</p>
+                              {competitor.isHighlighted && (
+                                <p className="text-xs text-orange-600">Our Solution</p>
+                              )}
+                            </div>
+                            <ChevronDown
+                              className={`w-4 h-4 text-gray-400 ml-auto transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                              aria-hidden
+                            />
                           </div>
-                          <div>
-                            <p className="font-semibold text-gray-800">{competitor.name}</p>
-                            {competitor.isHighlighted && (
-                              <p className="text-xs text-orange-600">Our Solution</p>
-                            )}
-                          </div>
-                          <ChevronDown className={`w-4 h-4 text-gray-400 ml-auto transition-transform ${
-                            expandedRow === competitor.id ? 'rotate-180' : ''
-                          }`} />
-                        </div>
-                      </td>
-                      
-                      {viewMode === 'features' ? (
-                        <>
-                          <td 
-                            className="text-center p-4"
-                            onMouseEnter={() => setHoveredCell({ row: competitor.id, col: 'engagingContent' })}
-                            onMouseLeave={() => setHoveredCell(null)}
+                        </td>
+
+                        {viewMode === 'features' ? (
+                          <>
+                            {(['engagingContent', 'proofOfLearning', 'aiPersonalization', 'careerOutcomes'] as const).map((key) => (
+                              <td
+                                key={key}
+                                className="text-center p-4"
+                                onMouseEnter={() => setHoveredCell({ row: competitor.id, col: key })}
+                                onMouseLeave={() => setHoveredCell(null)}
+                              >
+                                <div className="relative inline-block">
+                                  {renderStatus((competitor.features as any)[key].status)}
+                                  {hoveredCell?.row === competitor.id && hoveredCell?.col === key && (
+                                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded-lg whitespace-nowrap z-10">
+                                      {(competitor.features as any)[key].detail}
+                                    </div>
+                                  )}
+                                </div>
+                              </td>
+                            ))}
+                            <td className="p-4">{renderRetentionBar(competitor.features.retentionRate.value as any, (competitor.features.retentionRate as any).target)}</td>
+                          </>
+                        ) : (
+                          <>
+                            <td className="text-center p-4">{competitor.businessModel.revenue}</td>
+                            <td className="text-center p-4">{competitor.businessModel.pricing}</td>
+                            <td className="text-center p-4 font-semibold">{competitor.businessModel.marketCap}</td>
+                            <td className="text-center p-4">{competitor.businessModel.userBase}</td>
+                          </>
+                        )}
+                      </motion.tr>
+
+                      {/* Expanded row */}
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.tr
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
                           >
-                            <div className="relative inline-block">
-                              {renderStatus(competitor.features.engagingContent.status)}
-                              {hoveredCell?.row === competitor.id && hoveredCell?.col === 'engagingContent' && (
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded-lg whitespace-nowrap z-10">
-                                  {competitor.features.engagingContent.detail}
-                                </div>
-                              )}
-                            </div>
-                          </td>
-                          <td 
-                            className="text-center p-4"
-                            onMouseEnter={() => setHoveredCell({ row: competitor.id, col: 'proofOfLearning' })}
-                            onMouseLeave={() => setHoveredCell(null)}
-                          >
-                            <div className="relative inline-block">
-                              {renderStatus(competitor.features.proofOfLearning.status)}
-                              {hoveredCell?.row === competitor.id && hoveredCell?.col === 'proofOfLearning' && (
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded-lg whitespace-nowrap z-10">
-                                  {competitor.features.proofOfLearning.detail}
-                                </div>
-                              )}
-                            </div>
-                          </td>
-                          <td 
-                            className="text-center p-4"
-                            onMouseEnter={() => setHoveredCell({ row: competitor.id, col: 'aiPersonalization' })}
-                            onMouseLeave={() => setHoveredCell(null)}
-                          >
-                            <div className="relative inline-block">
-                              {renderStatus(competitor.features.aiPersonalization.status)}
-                              {hoveredCell?.row === competitor.id && hoveredCell?.col === 'aiPersonalization' && (
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded-lg whitespace-nowrap z-10">
-                                  {competitor.features.aiPersonalization.detail}
-                                </div>
-                              )}
-                            </div>
-                          </td>
-                          <td 
-                            className="text-center p-4"
-                            onMouseEnter={() => setHoveredCell({ row: competitor.id, col: 'careerOutcomes' })}
-                            onMouseLeave={() => setHoveredCell(null)}
-                          >
-                            <div className="relative inline-block">
-                              {renderStatus(competitor.features.careerOutcomes.status)}
-                              {hoveredCell?.row === competitor.id && hoveredCell?.col === 'careerOutcomes' && (
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-xs rounded-lg whitespace-nowrap z-10">
-                                  {competitor.features.careerOutcomes.detail}
-                                </div>
-                              )}
-                            </div>
-                          </td>
-                          <td className="p-4">
-                            <div className="min-w-[120px]">
-                              {renderRetentionBar(
-                                competitor.features.retentionRate.value,
-                                competitor.features.retentionRate.target
-                              )}
-                            </div>
-                          </td>
-                        </>
-                      ) : (
-                        <>
-                          <td className="text-center p-4 text-sm">{competitor.businessModel.revenue}</td>
-                          <td className="text-center p-4 text-sm">{competitor.businessModel.pricing}</td>
-                          <td className="text-center p-4 text-sm font-semibold">{competitor.businessModel.marketCap}</td>
-                          <td className="text-center p-4 text-sm">{competitor.businessModel.userBase}</td>
-                        </>
-                      )}
-                    </motion.tr>
-                    
-                    {/* Expanded Row */}
-                    <AnimatePresence>
-                      {expandedRow === competitor.id && (
-                        <motion.tr
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                        >
-                          <td colSpan={viewMode === 'features' ? 6 : 5} className="p-0">
-                            <div className={`p-6 bg-gray-50 border-b ${
-                              competitor.isHighlighted ? 'bg-gradient-to-r from-orange-50 to-yellow-50' : ''
-                            }`}>
-                              <p className="text-gray-700 mb-4">{competitor.description}</p>
-                              <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                  <h4 className="font-semibold text-gray-800 mb-2">Strengths</h4>
-                                  <ul className="space-y-1 text-sm text-gray-600">
-                                    {Object.entries(competitor.features).map(([key, value]) => {
-                                      if (value.status === 'yes' || value.status === 'partial') {
-                                        return (
-                                          <li key={key} className="flex items-center gap-2">
-                                            <Check className="w-4 h-4 text-green-500" />
-                                            {value.detail}
-                                          </li>
-                                        );
-                                      }
-                                      return null;
-                                    })}
-                                  </ul>
-                                </div>
-                                <div>
-                                  <h4 className="font-semibold text-gray-800 mb-2">Limitations</h4>
-                                  <ul className="space-y-1 text-sm text-gray-600">
-                                    {Object.entries(competitor.features).map(([key, value]) => {
-                                      if (value.status === 'no') {
-                                        return (
-                                          <li key={key} className="flex items-center gap-2">
-                                            <X className="w-4 h-4 text-red-500" />
-                                            {value.detail}
-                                          </li>
-                                        );
-                                      }
-                                      return null;
-                                    })}
-                                  </ul>
+                            <td colSpan={viewMode === 'features' ? 6 : 5} className="p-0">
+                              <div
+                                className={`p-6 border-b ${competitor.isHighlighted ? 'bg-gradient-to-r from-orange-50 to-yellow-50' : 'bg-gray-50'}`}
+                                role="region"
+                                aria-label={`${competitor.name} details`}
+                              >
+                                <p className="text-gray-700 mb-4">{competitor.description}</p>
+                                <div className="grid md:grid-cols-2 gap-4">
+                                  <div>
+                                    <h4 className="font-semibold text-gray-800 mb-2">Strengths</h4>
+                                    <ul className="space-y-1 text-gray-700">
+                                      {Object.entries(competitor.features).map(([k, v]: any[]) => {
+                                        if (v?.status === 'yes' || v?.status === 'partial') {
+                                          return (
+                                            <li key={k} className="flex items-center gap-2 text-sm">
+                                              <Check className="w-4 h-4 text-green-500" />
+                                              {v.detail}
+                                            </li>
+                                          );
+                                        }
+                                        return null;
+                                      })}
+                                    </ul>
+                                  </div>
+                                  <div>
+                                    <h4 className="font-semibold text-gray-800 mb-2">Limitations</h4>
+                                    <ul className="space-y-1 text-gray-700">
+                                      {Object.entries(competitor.features).map(([k, v]: any[]) => {
+                                        if (v?.status === 'no') {
+                                          return (
+                                            <li key={k} className="flex items-center gap-2 text-sm">
+                                              <X className="w-4 h-4 text-red-500" />
+                                              {v.detail}
+                                            </li>
+                                          );
+                                        }
+                                        return null;
+                                      })}
+                                    </ul>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </td>
-                        </motion.tr>
-                      )}
-                    </AnimatePresence>
-                  </React.Fragment>
-                ))}
+                            </td>
+                          </motion.tr>
+                        )}
+                      </AnimatePresence>
+                    </React.Fragment>
+                  );
+                })}
               </tbody>
             </table>
           </div>
         </motion.div>
 
-        {/* Mobile Swipeable Cards */}
+        {/* Mobile Cards */}
         <div className="lg:hidden">
           <div className="relative">
-            {/* Card Container */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={mobileCardIndex}
-                initial={{ opacity: 0, x: 100 }}
+                initial={{ opacity: 0, x: 80 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                className="bg-white rounded-2xl shadow-lg p-6"
+                exit={{ opacity: 0, x: -80 }}
+                className="bg-white rounded-2xl shadow-lg p-6 ring-1 ring-gray-200"
               >
                 {(() => {
                   const competitor = competitors[mobileCardIndex];
+                  const Icon = competitor.icon;
+                  const cs = colorStyles[competitor.color];
+
                   return (
                     <>
-                      {/* Card Header */}
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className={`w-12 h-12 bg-${competitor.color}-100 rounded-xl flex items-center justify-center`}>
-                          <competitor.icon className={`w-7 h-7 text-${competitor.color}-600`} />
+                      <div className="flex items-center gap-3 mb-5">
+                        <div className={`w-12 h-12 ${cs.bg} rounded-xl flex items-center justify-center ring-2 ${cs.ring}`}>
+                          <Icon className={`w-7 h-7 ${cs.text}`} />
                         </div>
                         <div>
                           <h3 className="text-xl font-bold text-gray-800">{competitor.name}</h3>
@@ -513,50 +462,36 @@ export default function CompetitiveSection() {
                         </div>
                       </div>
 
-                      {/* Description */}
                       <p className="text-gray-600 mb-6">{competitor.description}</p>
 
-                      {/* Features Grid */}
-<div className="space-y-4">
-  {featureColumns.map(col => {
-    const renderFeatureValue = () => {
-      if (col.id === 'retentionRate') {
-        const retentionData = competitor.features.retentionRate;
-        if ('value' in retentionData) {
-          return (
-            <div className="w-32">
-              {renderRetentionBar(
-                retentionData.value,
-                'target' in retentionData ? retentionData.target : undefined
-              )}
-            </div>
-          );
-        }
-        return <span className="text-gray-400 text-sm">N/A</span>;
-      } else {
-        const feature = competitor.features[col.id as 'engagingContent' | 'proofOfLearning' | 'aiPersonalization' | 'careerOutcomes'];
-        if (feature && 'status' in feature) {
-          return renderStatus(feature.status);
-        }
-        return <span className="text-gray-400 text-sm">N/A</span>;
-      }
-    };
+                      {/* Features summary */}
+                      <div className="space-y-4">
+                        {featureColumns.map((col) => {
+                          if (col.id === 'retentionRate') {
+                            const r: any = competitor.features.retentionRate;
+                            return (
+                              <div key={col.id} className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <col.icon className="w-5 h-5 text-gray-500" />
+                                  <span className="text-sm font-medium text-gray-700">{col.name}</span>
+                                </div>
+                                <div className="flex items-center gap-2">{renderRetentionBar(r.value, r.target)}</div>
+                              </div>
+                            );
+                          }
+                          const f: any = (competitor.features as any)[col.id];
+                          return (
+                            <div key={col.id} className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <col.icon className="w-5 h-5 text-gray-500" />
+                                <span className="text-sm font-medium text-gray-700">{col.name}</span>
+                              </div>
+                              <div>{renderStatus(f.status)}</div>
+                            </div>
+                          );
+                        })}
+                      </div>
 
-    return (
-      <div key={col.id} className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <col.icon className="w-5 h-5 text-gray-500" />
-          <span className="text-sm font-medium text-gray-700">{col.name}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          {renderFeatureValue()}
-        </div>
-      </div>
-    );
-  })}
-</div>
-
-                      {/* Business Model (if in business view) */}
                       {viewMode === 'business' && (
                         <div className="mt-6 pt-6 border-t border-gray-200">
                           <div className="grid grid-cols-2 gap-4 text-sm">
@@ -585,26 +520,25 @@ export default function CompetitiveSection() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Navigation */}
+            {/* Mobile nav */}
             <div className="flex items-center justify-between mt-6">
               <button
                 onClick={() => setMobileCardIndex(Math.max(0, mobileCardIndex - 1))}
                 disabled={mobileCardIndex === 0}
                 className="p-2 rounded-lg bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Previous competitor"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
 
               <div className="flex gap-2">
-                {competitors.map((_, index) => (
+                {competitors.map((_, i) => (
                   <button
-                    key={index}
-                    onClick={() => setMobileCardIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      index === mobileCardIndex 
-                        ? 'bg-orange-500 w-8' 
-                        : 'bg-gray-300'
-                    }`}
+                    key={i}
+                    onClick={() => setMobileCardIndex(i)}
+                    className={`w-2 h-2 rounded-full transition-all ${i === mobileCardIndex ? 'bg-orange-500 w-8' : 'bg-gray-300'}`}
+                    aria-label={`Go to competitor ${i + 1}`}
+                    aria-current={i === mobileCardIndex}
                   />
                 ))}
               </div>
@@ -613,6 +547,7 @@ export default function CompetitiveSection() {
                 onClick={() => setMobileCardIndex(Math.min(competitors.length - 1, mobileCardIndex + 1))}
                 disabled={mobileCardIndex === competitors.length - 1}
                 className="p-2 rounded-lg bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Next competitor"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -624,19 +559,16 @@ export default function CompetitiveSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
-          transition={{ delay: 0.8 }}
+          transition={{ delay: 0.7 }}
           className="mt-16"
         >
           <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-3xl p-8 text-white text-center">
             <Trophy className="w-16 h-16 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold mb-4">
-              The Only Complete Solution
-            </h3>
+            <h3 className="text-2xl font-bold mb-4">The Only Complete Solution</h3>
             <p className="text-xl opacity-90 max-w-3xl mx-auto mb-6">
               Only platform combining social learning + gamification + AI personalization + verified profiles + career outcomes
             </p>
-            
-            {/* Key Differentiators */}
+
             <div className="grid md:grid-cols-4 gap-4 mt-8">
               <div className="bg-white/10 backdrop-blur rounded-xl p-4">
                 <Users className="w-8 h-8 mx-auto mb-2" />

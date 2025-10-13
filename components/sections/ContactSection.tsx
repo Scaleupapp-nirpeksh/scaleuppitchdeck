@@ -41,14 +41,7 @@ export default function ContactSection() {
   ];
 
   const quickActions = [
-    {
-      icon: Download,
-      title: 'Download Pitch Deck',
-      description: 'Polished PPT export, ready to share',
-      action: () => downloadPitchDeckPpt(),
-      bgClass: 'bg-blue-100',
-      iconColor: 'text-blue-600'
-    },
+    
     {
       icon: Calendar,
       title: 'Schedule Meeting',

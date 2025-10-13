@@ -130,7 +130,7 @@ export default function UserJourneySection() {
       action: "Discovers ScaleUp through school friend's WhatsApp",
       outcome: "Free access to IIT toppers' content. Same quality as Kota, zero cost.",
       benefits: [
-        "Free peer-created content",
+        "Free user and expert-created content",
         "10-min videos in Hindi & English",
         "No need to move to Kota",
         "Studies from ₹2000 smartphone"
@@ -181,7 +181,6 @@ export default function UserJourneySection() {
       outcome: "Supports family + builds teaching reputation + maintains 8.5 CGPA",
       benefits: [
         "Earns by teaching what she learned",
-        "Flexible hours around classes",
         "Building verified teaching profile",
         "Network with other creators"
       ],
@@ -213,7 +212,7 @@ export default function UserJourneySection() {
       stats: {
         skills: '40+',
         projects: '5',
-        mockInterviews: '20+'
+        mentorship: '20+'
       }
     },
     {

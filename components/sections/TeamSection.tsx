@@ -57,7 +57,7 @@ export default function TeamSection() {
         { name: 'GE', color: 'blue' as ColorKey }
       ],
       achievements: [
-        'Built features used by millions globally',
+        'Built products used by millions globally',
         'Led cross-functional teams of 20+ engineers',
         'Scaled products from 0 to 1M+ users'
       ],
@@ -79,7 +79,7 @@ export default function TeamSection() {
       ],
       achievements: [
         'Scaled campaigns across India',
-        'Managed ₹10Cr+ marketing budgets',
+        'Managed ₹100Cr+ marketing budgets',
         'Built growth engines for 5 startups'
       ],
       skills: ['Growth Marketing', 'Strategy', 'Sales', 'User Acquisition', 'Fundraising'],
@@ -94,7 +94,7 @@ export default function TeamSection() {
       expertise: 'Full-Stack Development',
       experience: 'IIT Bombay',
       companies: [
-        { name: 'IIT Bombay', color: 'teal' as ColorKey }
+        
       ],
       achievements: [
         'Built ScaleUp MVP in 60 days',
